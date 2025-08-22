@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Шпаргалка</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, 
+                   "Apple Color Emoji", "Segoe UI Emoji";
+      background-color: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #161b22;
+      color: #f0f6fc;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-bottom: 1px solid #30363d;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      padding: 2rem;
+    }
+    h2 {
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 0.5rem;
+      margin-top: 1.5rem;
+      color: #f0f6fc;
+    }
+    h3 {
+      margin-top: 1rem;
+      color: #58a6ff;
+    }
+    p, li {
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+    code {
+      background-color: #0d1117;
+      color: #8b949e;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    ul {
+      padding-left: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #8b949e;
+    }
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: #79c0ff;
+    }
+    .section {
+      margin-bottom: 1.5rem;
+    }
+    .arrow {
+      color: #8b949e;
+      display: block;
+      text-align: center;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🐍 Python Шпаргалка
+  </header>
+  <main>
+    <div class="section">
+      <h3>Типы данных (всё — объекты)</h3>
+      <p><code>int, float, bool, str, None</code></p>
+      <p>📌 В Python нет примитивов как в Java. Все значения — объекты встроенных классов. Например: <code>42</code> — это экземпляр <code>int</code>, <code>"hi"</code> — экземпляр <code>str</code>. Переменные хранят <strong>ссылки на объекты</strong>, а не сами значения.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Операторы и поток</h3>
+      <p><code>if / elif / else / for / while / break / continue / pass</code></p>
+      <p>📌 Управляют выполнением. Цикл <code>for</code> работает с итерируемыми, а не с индексами. Начиная с Python 3.10 — <code>match</code> вместо switch-case.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Функции</h3>
+      <p><code>def, lambda, return, *args, **kwargs, аннотации (->)</code></p>
+      <p>📌 Функции — объекты первого класса. Можно передавать, возвращать, хранить. <code>lambda</code> — анонимные однострочные функции. <code>*args</code> и <code>**kwargs</code> — распаковка аргументов.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Классы и ООП</h3>
+      <p><code>class, __init__, self, @classmethod, @staticmethod, @property</code></p>
+      <p>📌 Поддержка полного ООП: инкапсуляция, наследование, полиморфизм. <code>self</code> — явная ссылка на экземпляр. <code>@property</code> — геттеры/сеттеры как атрибуты.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>object — корень всех классов</h3>
+      <p><code>__str__, __repr__, __eq__, __hash__, __class__</code></p>
+      <p>📌 Все классы неявно наследуются от <code>object</code> (в Python 3+).</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Доступ к атрибутам</h3>
+      <p><code>_ (внутреннее), __ (приватное), без подчёркивания (публичное)</code></p>
+      <p>📌 Нет ключевых слов <code>private/public</code>. Защита — по соглашению и name mangling.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Исключения</h3>
+      <p><code>try → except → else → finally → raise</code></p>
+      <p>📌 Все исключения — классы от <code>Exception</code>. <code>else</code> выполняется, если не было исключения. <code>finally</code> — всегда.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Коллекции</h3>
+      <ul>
+        <li><code>list</code> — изменяемый массив, <code>.append()</code>, <code>.pop()</code>, срезы <code>[::]</code></li>
+        <li><code>tuple</code> — неизменяем, хешируем, используется как ключ в <code>dict</code></li>
+        <li><code>dict</code> — ассоциативный массив, <code>.get()</code>, <code>.setdefault()</code>, <code>.items()</code></li>
+        <li><code>set</code> — уникальные элементы, <code>.add()</code>, <code>.union()</code>, <code>.difference()</code></li>
+      </ul>
+      <p>📌 Все коллекции — объекты, хранят ссылки на другие объекты.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Генераторы</h3>
+      <p><code>yield, (x for x in iterable)</code></p>
+      <p>📌 Позволяют создавать итераторы с ленивой генерацией. Экономят память.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Модули и пакеты</h3>
+      <p><code>import, from ... import, __init__.py, __name__ == '__main__'</code></p>
+      <p>📌 Каждый файл — модуль. Папка с <code>__init__.py</code> — пакет. <code>__name__ == '__main__'</code> — условие для запуска скрипта.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Декораторы</h3>
+      <p><code>@decorator, @wraps</code></p>
+      <p>📌 Функции, которые изменяют поведение других функций. Используются для логирования, кэширования, проверки прав, измерения времени.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Context Managers</h3>
+      <p><code>with ... as, __enter__, __exit__, contextlib</code></p>
+      <p>📌 Гарантируют корректное освобождение ресурсов. <code>with open(...) as f:</code> автоматически закрывает файл.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Работа с файлами</h3>
+      <p><code>open(), .read(), .write(), Path</code></p>
+      <p>📌 <code>open()</code> — для чтения/записи. <code>Path</code> — современный ООП-подход к путям.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>JSON</h3>
+      <p><code>json.load(), json.dump(), json.loads(), json.dumps()</code></p>
+      <p>📌 Встроенная поддержка. <code>loads/dumps</code> — строка, <code>load/dump</code> — файл.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Многопоточность</h3>
+      <p><code>threading.Thread, Lock, Queue, GIL</code></p>
+      <p>📌 Потоки есть, но <strong>GIL</strong> не позволяет им параллельно выполнять Python-код. Для CPU — multiprocessing, для I/O — threading.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Асинхронность</h3>
+      <p><code>async / await, asyncio, async with, async for</code></p>
+      <p>📌 Неблокирующее программирование. Используется в FastAPI, aiohttp, Telegram-ботах.</p>
+      <div class="arrow">↓</div>
+    </div>
+
+    <div class="section">
+      <h3>Утилиты и рефлексия</h3>
+      <p><code>len(), type(), isinstance(), id(), dir(), help()</code></p>
+      <p>📌 <code>id()</code> — уникальный идентификатор объекта. <code>isinstance(obj, cls)</code> — проверка типа.</p>
+    </div>
+
+    <p><a href="index.html">⬅️ Назад на главную</a></p>
+
+  </main>
+  <footer>
+    Сделано с ❤️ на GitHub Pages
+  </footer>
+</body>
+</html>
