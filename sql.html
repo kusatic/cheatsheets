@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Шпаргалка</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, 
+                   "Apple Color Emoji", "Segoe UI Emoji";
+      background-color: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #161b22;
+      color: #f0f6fc;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-bottom: 1px solid #30363d;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      padding: 2rem;
+    }
+    h2 {
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 0.5rem;
+      margin-top: 1.5rem;
+      color: #f0f6fc;
+    }
+    h3 {
+      margin-top: 1rem;
+      color: #58a6ff;
+    }
+    p, li {
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+    code {
+      display: block;
+      background-color: #0d1117;
+      color: #8b949e;
+      padding: 6px 8px;
+      border-radius: 6px;
+      margin: 0.5rem 0;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    ul {
+      padding-left: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #8b949e;
+    }
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: #79c0ff;
+    }
+    .section {
+      margin-bottom: 1.5rem;
+    }
+    .arrow {
+      color: #8b949e;
+      display: block;
+      text-align: center;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    💾 SQL Шпаргалка
+  </header>
+  <main>
+    <div class="section">
+      <h3>Основные команды</h3>
+      <p>[ SELECT ] → выборка данных</p>
+      <div class="arrow">↓</div>
+      <p>[ WHERE ] → фильтрация строк</p>
+      <div class="arrow">↓</div>
+      <p>[ GROUP BY ] → группировка</p>
+      <div class="arrow">↓</div>
+      <p>[ HAVING ] → фильтр по группам</p>
+      <div class="arrow">↓</div>
+      <p>[ ORDER BY ] → сортировка</p>
+      <div class="arrow">↓</div>
+      <p>[ JOIN ] → объединение таблиц</p>
+      <div class="arrow">↓</div>
+      <p>[ INSERT / UPDATE / DELETE ] → изменение данных</p>
+    </div>
+
+    <div class="section">
+      <h3>Примеры SELECT</h3>
+      <p>Выборка:</p>
+      <code>SELECT name, age FROM users;</code>
+      <p>Фильтрация:</p>
+      <code>SELECT * FROM policies WHERE status = 'ACTIVE';</code>
+      <p>Сортировка:</p>
+      <code>SELECT * FROM clients ORDER BY created_at DESC;</code>
+      <p>Группировка + агрегаты:</p>
+      <code>SELECT status, COUNT(*) FROM policies GROUP BY status;</code>
+      <p>Фильтрация групп:</p>
+      <code>SELECT user_id, COUNT(*) FROM policies GROUP BY user_id HAVING COUNT(*) > 5;</code>
+      <p>Объединение таблиц:</p>
+      <code>SELECT u.name, p.policy_id FROM users u JOIN policies p ON u.id = p.user_id;</code>
+    </div>
+
+    <div class="section">
+      <h3>DML (работа с данными)</h3>
+      <code>INSERT INTO users (name, email) VALUES ('Ivan', 'ivan@test.com');</code>
+      <code>UPDATE policies SET status = 'EXPIRED' WHERE id = 10;</code>
+      <code>DELETE FROM users WHERE id = 5;</code>
+    </div>
+
+    <div class="section">
+      <h3>Полезное для тестировщика</h3>
+      <p>Проверка данных после миграции:</p>
+      <code>SELECT COUNT(*) FROM policies;</code>
+      <p>Сравнение значений до/после изменений.</p>
+      <p>Проверка целостности связей (например, что все user_id есть в таблице users).</p>
+    </div>
+
+    <div class="section">
+      <h3>JOIN и вложенные запросы</h3>
+      <p>[ INNER JOIN ] → только совпадения</p>
+      <p>[ LEFT JOIN ]  → все строки из ЛЕВОЙ + совпадения</p>
+      <p>[ RIGHT JOIN ] → все строки из ПРАВОЙ + совпадения</p>
+      <p>[ FULL JOIN ]  → все строки из обеих таблиц</p>
+
+      <p>Пример нескольких JOIN:</p>
+      <code>
+SELECT c.name, p.policy_id, pay.amount, pay.status
+FROM clients c
+INNER JOIN policies p ON c.id = p.client_id
+LEFT JOIN payments pay ON p.policy_id = pay.policy_id
+WHERE p.status = 'ACTIVE';
+      </code>
+
+      <p>Вложенный запрос (Subquery):</p>
+      <code>
+SELECT name
+FROM clients
+WHERE id IN (
+    SELECT client_id
+    FROM policies
+    WHERE status = 'ACTIVE'
+    GROUP BY client_id
+    HAVING COUNT(*) > 2
+);
+      </code>
+
+      <p>Вложенный запрос в SELECT:</p>
+      <code>
+SELECT c.name,
+       (SELECT COUNT(*)
+        FROM policies p
+        WHERE p.client_id = c.id
+          AND p.status = 'ACTIVE') AS active_policies
+FROM clients c;
+      </code>
+    </div>
+
+    <p><a href="index.html">⬅️ Назад на главную</a></p>
+
+  </main>
+  <footer>
+    Сделано с ❤️ на GitHub Pages
+  </footer>
+</body>
+</html>
